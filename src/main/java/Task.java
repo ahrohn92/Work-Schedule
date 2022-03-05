@@ -10,7 +10,7 @@ public class Task {
 
 
     public Task(String desc) {
-
+        this.desc = desc;
     }
 
     public void setDesc(String desc) {
