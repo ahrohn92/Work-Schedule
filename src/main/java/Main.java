@@ -16,5 +16,6 @@ public class Main extends Application {
         primaryStage.setWidth(INIT_WIDTH);
         primaryStage.setHeight(INIT_HEIGHT);
         primaryStage.show();
+        new Schedule();
     }
 }
