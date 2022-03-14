@@ -1,17 +1,30 @@
 package column.taskgroup.task;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import column.taskgroup.EPriority;
 
 public class Task {
 
     private String mName;
-    private List<Task> mSubTasks;
+    private Optional<List<Task>> mSubTasks;
     private boolean mIsComplete;
+    private EPriority ePriority;
 
     private Task(Task.TaskBuilder pBuilder) {
         mName = pBuilder.mName;
         mSubTasks = pBuilder.mSubTasks;
         mIsComplete = pBuilder.mIsComplete;
+        ePriority = pBuilder.ePriority;
+    }
+
+    public void addSubTask(Task pTask) {
+        if (!Optional.ofNullable(mSubTasks).isPresent()) {
+            mSubTasks = Optional.ofNullable(new ArrayList<Task>());
+        }
+        mSubTasks.get().add(pTask);
     }
 
     public void setName(String pName) {
@@ -23,12 +36,7 @@ public class Task {
         return mName;
     }
 
-    public void setSubTasks(List<Task> pSubTasks) {
-        // NEED VALIDATION
-        mSubTasks = pSubTasks;
-    }
-
-    public List<Task> getSubTasks() {
+    public Optional<List<Task>> getSubTasks() {
         return mSubTasks;
     }
 
@@ -41,24 +49,31 @@ public class Task {
         return mIsComplete;
     }
 
+    public void setPriority(EPriority pPriority) {
+        // NEED VALIDATION
+        ePriority = pPriority;
+    }
+
+    public EPriority getPriority() {
+        return ePriority;
+    }
+
     @Override
     public String toString() {
         return "Task{" +
                 "mName='" + mName + '\'' +
                 ", mSubTasks=" + mSubTasks +
                 ", mIsComplete=" + mIsComplete +
+                ", ePriority=" + ePriority +
                 '}';
     }
 
     public static class TaskBuilder {
 
         private String mName;
-        private List<Task> mSubTasks;
+        private Optional<List<Task>> mSubTasks;
         private boolean mIsComplete;
-
-        public TaskBuilder() {
-            // MANDATORY VARIABLES ARE SET HERE, THESE VARIABLES SHOULD BE SET TO FINAL
-        }
+        private EPriority ePriority;
 
         public TaskBuilder setName(String pName) {
             mName = pName;
@@ -66,7 +81,7 @@ public class Task {
         }
 
         public TaskBuilder setSubTasks(List<Task> pSubTasks) {
-            mSubTasks = pSubTasks;
+            mSubTasks = Optional.ofNullable(pSubTasks);
             return this;
         }
 
@@ -75,14 +90,15 @@ public class Task {
             return this;
         }
 
-        public Task build() {
-            Task task = new Task(this);
-            validateTask(task);
-            return task;
+        public TaskBuilder setPriority(EPriority pPriority) {
+            ePriority = pPriority;
+            return this;
         }
 
-        private void validateTask(Task task) {
-            // DO VALIDATION OF TASK OBJECT HERE
+        public Task build() {
+            mName = mName == null || mName.isEmpty() ? "New Task" : mName;
+            ePriority = ePriority == null ? EPriority.UNKNOWN : ePriority;
+            return new Task(this);
         }
     }
 }

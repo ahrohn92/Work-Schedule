@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="column.taskgroup.task.TaskTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2022-03-14T01:36:29" hostname="DESKTOP-QH7BMK5" time="0.011">
+  <properties/>
+  <testcase name="testSettersAndGetters_BuildNoParams()" classname="column.taskgroup.task.TaskTest" time="0.01"/>
+  <testcase name="testSettersAndGetters_BuildAllParams()" classname="column.taskgroup.task.TaskTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
